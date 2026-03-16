@@ -36,7 +36,7 @@ NEXT_PUBLIC_SITE_URL="https://your-domain.vercel.app"
 ## Vercel Deploy
 1. Repo'yu Vercel'e bağlayın.
 2. Vercel dashboard üzerinde ENV değişkenlerini girin.
-3. Build Command: `npm run build`
+3. Build Command: `npm run build` (repo içinde `vercel.json` ile `npm run vercel-build` kullanacak şekilde override edilmiştir)
 4. Start Command: `npm run start`
 5. Neon veritabanı ile bağlantıyı `DATABASE_URL` üzerinden sağlayın.
 
@@ -45,3 +45,8 @@ NEXT_PUBLIC_SITE_URL="https://your-domain.vercel.app"
 - İçerik eklerken her dil için ayrı slug/title/body tanımlayın
 - Görseli dosya yükleyerek imgbb üzerinden alın
 - İçerikler frontend'de anında görünür (deploy gerekmez)
+
+
+## Vercel Build Akışı
+- `vercel.json` -> `npm run vercel-build`
+- `vercel-build` sırası: `prisma generate` -> `prisma migrate deploy` -> `prisma db seed` -> `next build`

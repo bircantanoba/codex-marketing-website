@@ -43,34 +43,46 @@ async function main() {
     });
   }
 
-  const content = await prisma.content.create({
-    data: {
-      type: ContentType.PRODUCT,
-      category: 'SaaS',
-      imageUrl: 'https://i.ibb.co/wQwgjbn/product-cover.jpg',
-      publishedAt: new Date(),
-      translations: {
-        create: [
-          {
-            languageId: tr.id,
-            slug: 'akilli-analitik-platformu',
-            title: 'Akıllı Analitik Platformu',
-            description: 'Pazarlama kampanyalarınızı gerçek zamanlı optimize edin.',
-            bodyHtml: '<p><strong>Akıllı Analitik Platformu</strong> ile veriyi aksiyona dönüştürün.</p>'
-          },
-          {
-            languageId: en.id,
-            slug: 'smart-analytics-platform',
-            title: 'Smart Analytics Platform',
-            description: 'Optimize your campaigns in real time.',
-            bodyHtml: '<p>Turn your data into action with our <strong>Smart Analytics Platform</strong>.</p>'
-          }
-        ]
-      }
+  const existingTrTranslation = await prisma.contentTranslation.findFirst({
+    where: {
+      languageId: tr.id,
+      slug: 'akilli-analitik-platformu',
+      content: { type: ContentType.PRODUCT }
     }
   });
 
-  console.log('Seeded content:', content.id);
+  if (!existingTrTranslation) {
+    const content = await prisma.content.create({
+      data: {
+        type: ContentType.PRODUCT,
+        category: 'SaaS',
+        imageUrl: 'https://i.ibb.co/wQwgjbn/product-cover.jpg',
+        publishedAt: new Date(),
+        translations: {
+          create: [
+            {
+              languageId: tr.id,
+              slug: 'akilli-analitik-platformu',
+              title: 'Akıllı Analitik Platformu',
+              description: 'Pazarlama kampanyalarınızı gerçek zamanlı optimize edin.',
+              bodyHtml: '<p><strong>Akıllı Analitik Platformu</strong> ile veriyi aksiyona dönüştürün.</p>'
+            },
+            {
+              languageId: en.id,
+              slug: 'smart-analytics-platform',
+              title: 'Smart Analytics Platform',
+              description: 'Optimize your campaigns in real time.',
+              bodyHtml: '<p>Turn your data into action with our <strong>Smart Analytics Platform</strong>.</p>'
+            }
+          ]
+        }
+      }
+    });
+
+    console.log('Seeded content:', content.id);
+  } else {
+    console.log('Seed skipped: sample product already exists.');
+  }
 }
 
 main().finally(async () => prisma.$disconnect());
