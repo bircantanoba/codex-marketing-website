@@ -30,16 +30,22 @@ export async function getContentList(type: ContentType, locale: string) {
     .map((item) => {
       const t = item.translations.find((tr) => tr.language.code === locale) ?? item.translations[0];
       if (!t) return null;
+
       return {
         id: item.id,
         type: item.type,
         category: item.category,
         imageUrl: item.imageUrl,
         publishedAt: item.publishedAt,
-        ...t
+        translationId: t.id,
+        languageCode: t.language.code,
+        slug: t.slug,
+        title: t.title,
+        description: t.description,
+        bodyHtml: t.bodyHtml
       };
     })
-    .filter(Boolean);
+    .filter((item): item is NonNullable<typeof item> => item !== null);
 }
 
 export async function getContentBySlug(type: ContentType, locale: string, slug: string) {
