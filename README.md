@@ -28,7 +28,6 @@ npm run dev
 `.env` dosyasına aşağıdakileri ekleyin:
 ```env
 DATABASE_URL="postgresql://..."
-DIRECT_URL="postgresql://..."
 IMGBB_API_KEY="..."
 NEXT_PUBLIC_SITE_URL="https://your-domain.vercel.app"
 ```
