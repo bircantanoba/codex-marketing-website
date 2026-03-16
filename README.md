@@ -12,6 +12,7 @@ Bu proje, **Next.js App Router + TypeScript** ile hazırlanmış bir marketing w
 - Görsel yükleme (`imgbb`) ve URL olarak saklama
 - Prisma ORM + Neon PostgreSQL uyumu
 - Dynamic routing ile deploy gerektirmeyen URL güncellemeleri
+- Build sürecinde Prisma Client güncelliği için `build` komutu `prisma generate && next build` olarak ayarlanmıştır.
 
 ## Kurulum
 ```bash
