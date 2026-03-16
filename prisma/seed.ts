@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 async function main() {
   const tr = await prisma.language.upsert({
     where: { code: 'tr' },
-    update: { isDefault: true, name: 'Türkçe' },
+    update: { isDefault: true, name: 'Türkçe' }, 
     create: { code: 'tr', name: 'Türkçe', isDefault: true }
   });
 
